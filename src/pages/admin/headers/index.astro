@@ -1,0 +1,29 @@
+---
+import { getDocs, collection } from "firebase/firestore";
+import Layout from "@layouts/Layout.astro";
+import ItemList from '@components/headers/ItemList'
+import { FIREBASE_AUTH, FIRESTORE_DB } from "@lib/firebase/client";
+
+/* get birthdates from firestore */
+
+  const itemsRef=collection(FIRESTORE_DB,'items')
+    const querySnapshot = await getDocs(itemsRef);
+
+const items = querySnapshot.docs.map((doc) => {
+  return { id: doc.id, ...doc.data() };
+});
+console.log("helloooooo")
+console.log(items)
+---
+
+<Layout title="All Users">
+<div class="w-full mt-12">
+    <p class="text-xl pb-3 flex items-center">
+        <i class="fas fa-list mr-3"></i> Table Mimi
+    </p>
+    <div class="bg-white overflow-auto">
+        <ItemList items={items} client:load/>
+    </div>
+   
+</div>
+</Layout>
